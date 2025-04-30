@@ -6,12 +6,12 @@ function show(data){
 console.log(data);
 const main = document.querySelector("main");
 const markup = data.map(product =>`
- <article class=${product.discount ? "onSale" : "class=smallProduct"} >
+ <article class="${product.discount ? "onSale smallProduct" : "smallProduct"}">
             <img src="https://kea-alt-del.dk/t7/images/webp/640/${product.id}.webp" alt="product image" />
             <h3>${product.productdisplayname}</h3>
             <p class="subtle">Tshirts | Nike</p>
             <p class="price">DKK <span>${product.price}</span>,-</p>
-            <div class=discounted">
+            <div class="discounted">
                 <p>Now DKK <span></span>,-</p>
                 <p><span>${product.discount}</span>%</p>
             </div>
