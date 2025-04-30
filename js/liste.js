@@ -6,10 +6,17 @@ function show(data){
 console.log(data);
 const main = document.querySelector("main");
 const markup = data.map(product =>`
-    <article>
-    <img src=https://kea-alt-del.dk/t7/images/webp/640/${product.id}.webp alt="produktbillede">
-    <h3>${product.productdisplayname}</h3>
-    </article>
+ <article class="smallProduct">
+            <img src="https://kea-alt-del.dk/t7/images/webp/640/${product.id}.webp" alt="product image" />
+            <h3>${product.productdisplayname}</h3>
+            <p class="subtle">Tshirts | Nike</p>
+            <p class="price">DKK <span>${product.price}</span>,-</p>
+            <div class="discounted">
+                <p>Now DKK <span></span>,-</p>
+                <p><span></span>%</p>
+            </div>
+            <a href="product.html?id=${product.id}">Read More</a>
+        </article>
 `).join('');
 main.innerHTML=markup;
 }
