@@ -5,20 +5,13 @@ fetch(url).then(response=>response.json()).then(show);
 function show(data){
 console.log(data);
 const main = document.querySelector("main");
-data.forEach(product => {
-    const newH3 = document.createElement("h3");
-    newH3.textContent=product.productdisplayname;
-    const newImg = document.createElement("img");
-    newImg.src=`https://kea-alt-del.dk/t7/images/webp/640/${product.id}.webp`
-    const newP = document.createElement("p");
-    newP.textContent=product.articletype + " | " + product.brandname;
-    const newArticle = document.createElement("article");
-    newArticle.classList.add("smallProduct");
-    newArticle.appendChild(newImg); 
-    newArticle.appendChild(newH3); 
-    newArticle.appendChild(newP); 
-    main.appendChild(newArticle)
-});
+const markup = data.map(product =>`
+    <article>
+    <img src=https://kea-alt-del.dk/t7/images/webp/640/${product.id}.webp alt="produktbillede">
+    <h3>${product.productdisplayname}</h3>
+    </article>
+`).join('');
+main.innerHTML=markup;
 }
 
 /*
