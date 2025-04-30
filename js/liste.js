@@ -3,8 +3,8 @@ const url = "https://kea-alt-del.dk/t7/api/products";
 fetch(url).then(response=>response.json()).then(show);
 
 function show(data){
-    console.log(data);
-    const main = document.querySelector("main");
+console.log(data);
+const main = document.querySelector("main");
 data.forEach(product => {
     const newH3 = document.createElement("h3");
     newH3.textContent=product.productdisplayname;
