@@ -1,3 +1,1 @@
-# lav dette site vha componenter i astro
-
-# start med produktlist
+Eksempel med Rest API
