@@ -5,8 +5,10 @@ const id = params.get("id");
 
 fetch(`https://kea-alt-del.dk/t7/api/products/${id}`)
   .then((response) => response.json())
-  .then((product) => {
-    productContainer.innerHTML = `
+  .then(showProduct)
+
+function showProduct(product) {
+  productContainer.innerHTML = `
     <figure>
     <img
     src="https://kea-alt-del.dk/t7/images/webp/640/${product.id}.webp"
@@ -25,4 +27,4 @@ fetch(`https://kea-alt-del.dk/t7/api/products/${id}`)
     <button class="buyButton">Køb nu</button>
     </section>
     `;
-  });
+}
