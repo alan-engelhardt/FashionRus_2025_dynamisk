@@ -1,17 +1,21 @@
 :root {
   --off-color: red;
 }
+
 html {
   scroll-behavior: smooth;
 }
+
 .mainNav h1 span {
   display: inline-block;
   transform: scaleX(-1) translateX(-0.2rem);
   color: var(--off-color);
 }
-.mainNav > * {
+
+.mainNav>* {
   margin: 0;
 }
+
 @media screen and (min-width: 700px) {
   .mainNav {
     display: flex;
@@ -20,11 +24,15 @@ html {
   }
 }
 
+.aktivtFilter {
+  background-color: red;
+}
+
 .mainNav h1 {
   margin-right: auto;
 }
 
-.mainNav > a {
+.mainNav>a {
   display: block;
   text-decoration: none;
 }
@@ -55,27 +63,34 @@ html {
   grid-template-columns: repeat(auto-fill, minmax(150px, 290px));
   gap: 2rem;
 }
+
 .productlist main h2 {
   grid-column: 1/-1;
 }
+
 .productlist article h3 {
   font-size: 1rem;
   flex-grow: 3;
 }
-.productlist article > * {
+
+.productlist article>* {
   margin: 0;
   font-size: 0.9rem;
 }
+
 .subtle {
   color: var(--text-decoration-color);
 }
+
 .productlist article {
   display: flex;
   flex-direction: column;
 }
+
 .productlist article.soldOut img {
   opacity: 0.5;
 }
+
 .productlist article.soldOut::before {
   content: "Sold Out";
   position: absolute;
@@ -83,27 +98,34 @@ html {
   color: var(--background-color);
   padding: 1rem;
 }
+
 .productlist article .discounted {
   display: none;
 }
+
 .productlist article.onSale .discounted {
   display: flex;
   justify-content: space-between;
 }
-.discounted > p {
+
+.discounted>p {
   margin-bottom: 0;
 }
+
 .productlist article.onSale .price span {
   /* display: initial; */
   text-decoration: line-through;
   color: var(--off-color);
 }
+
 .productlist article button {
   margin-top: auto;
 }
+
 .productlist article {
   margin-bottom: 1rem;
 }
+
 .discounted p:last-child {
   background: var(--off-color);
   padding: 0.2rem;
@@ -119,37 +141,47 @@ html {
   color: var(--background-color);
   padding: 1rem;
 }
+
 .info {
   padding: 1rem;
 }
+
 .product select {
   min-width: 100px;
 }
+
 .product main {
   display: grid;
 }
+
 .product main .breadcrumbs,
 .product main img {
   grid-column: 1/-1;
 }
+
 .purchaseBox form label {
   gap: 1rem;
 }
+
 .purchaseBox button {
   display: block;
   margin-top: 1rem;
   width: 100%;
 }
+
 dt {
   font-weight: 700;
 }
+
 @media screen and (min-width: 900px) {
   .product main {
     grid-template-columns: 1fr 310px;
   }
+
   .info {
     order: 0;
   }
+
   .purchaseBox {
     order: 2;
     transform: translate(-50px, -100px);
