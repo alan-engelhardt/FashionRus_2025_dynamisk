@@ -1,12 +1,25 @@
 
 const productListContainer = document.querySelector("main");
 let allProducts;
+let startAt = 0;
 
-fetch(`https://kea-alt-del.dk/t7/api/products?limit=20&start=20`)
-    .then((response) => response.json())
-    .then(data => { allProducts = data; showProducts(data) })
+function getData(start) {
+    fetch(`https://kea-alt-del.dk/t7/api/products?limit=20&start=${start}`)
+        .then((response) => response.json())
+        .then(data => { allProducts = data; showProducts(data) })
+}
 
-const knapper = document.querySelectorAll("button")
+getData(startAt);
+
+document.querySelector("#showMoreButton").addEventListener("click", showMore);
+
+function showMore() {
+    startAt += 20;
+    getData(startAt);
+    document.documentElement.scrollTop = 0;
+}
+
+const knapper = document.querySelectorAll("#filters button")
 knapper.forEach(knap => knap.addEventListener("click", filterData));
 
 const numItems = document.querySelector("#items");
