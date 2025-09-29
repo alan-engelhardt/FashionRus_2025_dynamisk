@@ -10,11 +10,11 @@ document.querySelectorAll("button").forEach(knap => knap.addEventListener("click
 const numItems = document.querySelector("#items");
 
 function filterData() {
-    console.log(this.dataset.filter)
-    if (this.dataset.filter == "all") {
+    console.log(this.dataset.gender)
+    if (this.dataset.gender == "all") {
         showProducts(allProducts);
     } else {
-        const udsnit = allProducts.filter(product => product.gender == this.dataset.filter);
+        const udsnit = allProducts.filter(product => product.gender == this.dataset.gender);
         showProducts(udsnit);
         console.log(udsnit);
     }
