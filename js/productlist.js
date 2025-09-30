@@ -3,23 +3,26 @@ const category = params.get("category");
 document.querySelector("h2").textContent = category;
 
 const productListContainer = document.querySelector("main");
-const lh_knap = document.querySelector("#lh-knap");
-lh_knap.addEventListener("click", sorter);
+
+document.querySelector("#lh-knap").addEventListener("click", () => {
+  allData.sort((firstItem, secondItem) => firstItem.price - secondItem.price);
+  showProducts(allData);
+});
+
+document.querySelector("#hl-knap").addEventListener("click", () => {
+  allData.sort((firstItem, secondItem) => secondItem.price - firstItem.price);
+  console.log(allData)
+  showProducts(allData);
+});
 
 let allData = []
 
-function sorter() {
-  //console.log(allData)
-  allData.sort((firstItem, secondItem) => firstItem.price - secondItem.price);
-  showProducts(allData);
-}
-
-fetch(`https://kea-alt-del.dk/t7/api/products?limit=5&category=${category}`)
+fetch(`https://kea-alt-del.dk/t7/api/products?limit=10&category=${category}`)
   .then((response) => response.json())
   .then((data) => { allData = allData.concat(data); showProducts(allData) });
 
 function showProducts(products) {
-  console.log(products);
+  //console.log(products);
   productListContainer.innerHTML = ""
   products.forEach((element) => {
     //console.log(element);
