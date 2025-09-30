@@ -4,9 +4,22 @@ document.querySelector("h2").textContent = category;
 
 const productListContainer = document.querySelector("main");
 
+document.querySelectorAll("#filters button").forEach(knap => knap.addEventListener("click", showFiltered));
+
+function showFiltered() {
+    console.log("showFiltered");
+}
+
+let allData;
+
 fetch(`https://kea-alt-del.dk/t7/api/products?limit=20&category=${category}`)
     .then((response) => response.json())
-    .then((data) => showProducts(data));
+    .then((data) => {
+        allData = data;
+        showProducts(allData);
+    });
+
+
 
 function showProducts(products) {
     console.log(products);
