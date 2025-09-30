@@ -11,7 +11,6 @@ document.querySelector("#lh-knap").addEventListener("click", () => {
 
 document.querySelector("#hl-knap").addEventListener("click", () => {
   allData.sort((firstItem, secondItem) => secondItem.price - firstItem.price);
-  console.log(allData)
   showProducts(allData);
 });
 
@@ -22,10 +21,8 @@ fetch(`https://kea-alt-del.dk/t7/api/products?limit=10&category=${category}`)
   .then((data) => { allData = allData.concat(data); showProducts(allData) });
 
 function showProducts(products) {
-  //console.log(products);
   productListContainer.innerHTML = ""
   products.forEach((element) => {
-    //console.log(element);
     productListContainer.innerHTML += `<article class="smallProduct ${element.soldout && "soldOut"
       } ${element.discount && "onSale"}">
             <img src="https://kea-alt-del.dk/t7/images/webp/640/${element.id
