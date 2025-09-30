@@ -7,12 +7,19 @@ const productListContainer = document.querySelector("main");
 document.querySelectorAll("#filters button").forEach(knap => knap.addEventListener("click", showFiltered));
 
 function showFiltered() {
-    console.log("showFiltered");
+    console.log(this.dataset.gender);
+    const gender = this.dataset.gender;
+    if (gender == "All") {
+        showProducts(allData);
+    } else {
+        const udsnit = allData.filter(product => product.gender == gender);
+        showProducts(udsnit);
+    }
 }
 
 let allData;
 
-fetch(`https://kea-alt-del.dk/t7/api/products?limit=20&category=${category}`)
+fetch(`https://kea-alt-del.dk/t7/api/products?limit=30&category=${category}`)
     .then((response) => response.json())
     .then((data) => {
         allData = data;
@@ -23,6 +30,7 @@ fetch(`https://kea-alt-del.dk/t7/api/products?limit=20&category=${category}`)
 
 function showProducts(products) {
     console.log(products);
+    productListContainer.innerHTML = "";
     products.forEach((element) => {
         console.log(element);
         productListContainer.innerHTML += `<article class="smallProduct ${element.soldout && "soldOut"
