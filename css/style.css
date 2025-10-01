@@ -208,3 +208,7 @@ dt {
     content: "";
   }
 }
+
+.aktiv {
+  background-color: red;
+}

@@ -32,19 +32,24 @@ let allData, currentDataSet;
 // sæt eventlistener på elementet der indeholder filterknapperne
 document.querySelector("#filters").addEventListener("click", showFiltered);
 
-// funktion der enten viser alle data eller det filtrerede udsnit
+// funktion der enten viser alle data eller et filtreret udsnit
 function showFiltered(event) {
-    const gender = event.target.dataset.gender;
-    if (gender == "All") {
-        showProducts(allData);
-        currentDataSet = allData
-    } else {
-        // her filtreres det valgte udsnit (den værdi der står i gender) fra alle data
-        const udsnit = allData.filter(product => product.gender == gender);
-        currentDataSet = udsnit;
+    // tjek om der er en gender data-attribut
+    if (event.target.dataset.gender) {
+        document.querySelector("#filters .aktiv").classList.remove("aktiv");
+        event.target.classList.add("aktiv");
+        const gender = event.target.dataset.gender;
+        if (gender == "All") {
+            showProducts(allData);
+            currentDataSet = allData
+        } else {
+            // her filtreres det valgte udsnit (den værdi der står i gender) fra alle data
+            const udsnit = allData.filter(product => product.gender == gender);
+            currentDataSet = udsnit;
+        }
+        // currentDataSet indehodler enten alle produkter eller et udsnit
+        showProducts(currentDataSet);
     }
-    // currentDataSet indehodler enten alle produkter eller et udsnit
-    showProducts(currentDataSet);
 }
 
 // sæt eventlistener på elementet der indeholder sorteringsknapperne
@@ -52,16 +57,20 @@ document.querySelector("#sorting").addEventListener("click", sortItems);
 
 // funktion der sorterer arrayet currentDataSet baseret på hvilken sorteringsknap der er trykket på
 function sortItems(event) {
-    const direction = event.target.dataset.direction;
-    if (direction == "lohi") {
-        // her soteres arrayet ifht. egenskaben price fra lav til høj
-        currentDataSet.sort((firstItem, secondItem) => firstItem.price - secondItem.price);
-    } else {
-        // her soteres arrayet ifht. egenskaben price fra høj til lav
-        currentDataSet.sort((firstItem, secondItem) => secondItem.price - firstItem.price);
+    if (event.target.dataset.direction) {
+        document.querySelector("#sorting .aktiv") && document.querySelector("#sorting .aktiv").classList.remove("aktiv");
+        event.target.classList.add("aktiv");
+        const direction = event.target.dataset.direction;
+        if (direction == "lohi") {
+            // her soteres arrayet ifht. egenskaben price fra lav til høj
+            currentDataSet.sort((firstItem, secondItem) => firstItem.price - secondItem.price);
+        } else {
+            // her soteres arrayet ifht. egenskaben price fra høj til lav
+            currentDataSet.sort((firstItem, secondItem) => secondItem.price - firstItem.price);
+        }
+        showProducts(currentDataSet);
+        // showProducts kaldes med det sorterede array som argument
     }
-    showProducts(currentDataSet);
-    // showProducts kaldes med det sorterede array som argument
 }
 
 
