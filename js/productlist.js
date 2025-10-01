@@ -83,6 +83,7 @@ fetch(`https://kea-alt-del.dk/t7/api/products?limit=30&${theme}=${subject}`)
 
 
 function showProducts(products) {
+    numItems.textContent = products.length;
     productListContainer.innerHTML = "";
     products.forEach((element) => {
         console.log(element.price);
