@@ -7,7 +7,6 @@ let myRange = document.querySelector("#myRange");
 let theme = "season";
 let subject = "Summer"
 
-myRange.addEventListener("change", showFiltered);
 
 if (category) {
     subhead.textContent = category;
@@ -35,6 +34,10 @@ let allData, currentDataSet;
 // sæt eventlistener på elementet der indeholder filterknapperne
 document.querySelector("#filters").addEventListener("click", showFiltered);
 
+const maxDisp = document.querySelector("#max");
+myRange.addEventListener("input", () => maxDisp.textContent = event.target.value);
+myRange.addEventListener("change", showFiltered);
+
 // funktion der enten viser alle data eller et filtreret udsnit
 function showFiltered(event) {
     console.log(event.target.value)
@@ -55,7 +58,6 @@ function showFiltered(event) {
     } else {
         const max = event.target.value;
         const udsnit = allData.filter(product => product.price < max);
-        document.querySelector("#max").textContent = max;
         currentDataSet = udsnit;
     }
     showProducts(currentDataSet);
