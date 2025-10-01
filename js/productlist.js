@@ -3,8 +3,11 @@ const category = params.get("category");
 const brand = params.get("brand");
 const season = params.get("season");
 let subhead = document.querySelector("h2");
+let myRange = document.querySelector("#myRange");
 let theme = "season";
 let subject = "Summer"
+
+myRange.addEventListener("change", showFiltered);
 
 if (category) {
     subhead.textContent = category;
@@ -34,6 +37,7 @@ document.querySelector("#filters").addEventListener("click", showFiltered);
 
 // funktion der enten viser alle data eller et filtreret udsnit
 function showFiltered(event) {
+    console.log(event.target.value)
     // tjek om der er en gender data-attribut
     if (event.target.dataset.gender) {
         document.querySelector("#filters .aktiv").classList.remove("aktiv");
@@ -48,8 +52,13 @@ function showFiltered(event) {
             currentDataSet = udsnit;
         }
         // currentDataSet indehodler enten alle produkter eller et udsnit
-        showProducts(currentDataSet);
+    } else {
+        const max = event.target.value;
+        const udsnit = allData.filter(product => product.price < max);
+        document.querySelector("#max").textContent = max;
+        currentDataSet = udsnit;
     }
+    showProducts(currentDataSet);
 }
 
 // sæt eventlistener på elementet der indeholder sorteringsknapperne
