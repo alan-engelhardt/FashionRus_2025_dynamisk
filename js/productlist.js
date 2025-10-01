@@ -2,6 +2,7 @@ const params = new URLSearchParams(window.location.search);
 const category = params.get("category");
 const brand = params.get("brand");
 const season = params.get("season");
+let allData, currentDataSet;
 let subhead = document.querySelector("h2");
 let theme = "season";
 let subject = "Summer"
@@ -31,18 +32,32 @@ function showFiltered(event) {
     const gender = event.target.dataset.gender;
     if (gender == "All") {
         showProducts(allData);
+        currentDataSet = allData
     } else {
         const udsnit = allData.filter(product => product.gender == gender);
-        showProducts(udsnit);
+        currentDataSet = udsnit
     }
+    showProducts(currentDataSet);
 }
 
-let allData;
+document.querySelector("#sorting").addEventListener("click", sortItems);
+
+function sortItems(event) {
+    console.log(currentDataSet);
+    const direction = event.target.dataset.direction;
+    if (direction == "lohi") {
+        currentDataSet.sort((firstItem, secondItem) => firstItem.price - secondItem.price);
+    } else {
+        currentDataSet.sort((firstItem, secondItem) => secondItem.price - firstItem.price);
+    }
+    showProducts(currentDataSet);
+}
+
 
 fetch(`https://kea-alt-del.dk/t7/api/products?limit=30&${theme}=${subject}`)
     .then((response) => response.json())
     .then((data) => {
-        allData = data;
+        allData = currentDataSet = data;
         showProducts(allData);
     });
 
