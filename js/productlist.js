@@ -66,11 +66,11 @@ function showFiltered(event) {
             const udsnit = allData.filter(product => product.gender == gender);
             currentDataSet = udsnit;
         }
-        highestPrice(currentDataSet)
+
         // fitrer efter max pris hvis slider/range er ændret
     } else if (event.target.id == "myRange") {
         const max = event.target.value;
-        const udsnit = currentDataSet.filter(product => product.price <= max);
+        const udsnit = allData.filter(product => product.price <= max);
         currentDataSet = udsnit;
     }
     // currentDataSet indehodler enten alle produkter eller et udsnit
