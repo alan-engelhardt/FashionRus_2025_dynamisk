@@ -3,6 +3,7 @@ const category = params.get("category");
 const brand = params.get("brand");
 const season = params.get("season");
 let subhead = document.querySelector("h2");
+let numItems = document.querySelector("#numItems");
 let theme = "season";
 let subject = "Summer"
 
@@ -35,6 +36,7 @@ document.querySelector("#filters").addEventListener("click", showFiltered);
 
 const myRange = document.querySelector("#myRange");
 const maxDisp = document.querySelector("#max");
+const minDisp = document.querySelector("#min");
 myRange.addEventListener("input", () => maxDisp.textContent = event.target.value);
 myRange.addEventListener("change", showFiltered);
 
@@ -43,11 +45,14 @@ function highestPrice(arr) {
     const highest = arr[arr.length - 1].price;
     myRange.max = highest;
     maxDisp.textContent = highest;
+    myRange.min = arr[0].price;
+    minDisp.textContent = arr[0].price;
+    console.log(arr[0])
 }
 
 // funktion der enten viser alle data eller et filtreret udsnit
 function showFiltered(event) {
-    //console.log(event.target.value)
+    console.log(event.target)
     // tjek om der er en gender data-attribut
     if (event.target.dataset.gender) {
         document.querySelector("#filters .aktiv").classList.remove("aktiv");
@@ -61,12 +66,14 @@ function showFiltered(event) {
             const udsnit = allData.filter(product => product.gender == gender);
             currentDataSet = udsnit;
         }
-        // currentDataSet indehodler enten alle produkter eller et udsnit
-    } else {
+        highestPrice(currentDataSet)
+        // fitrer efter max pris hvis slider/range er ændret
+    } else if (event.target.id == "myRange") {
         const max = event.target.value;
-        const udsnit = allData.filter(product => product.price < max);
+        const udsnit = currentDataSet.filter(product => product.price <= max);
         currentDataSet = udsnit;
     }
+    // currentDataSet indehodler enten alle produkter eller et udsnit
     showProducts(currentDataSet);
 }
 
@@ -102,9 +109,9 @@ fetch(`https://kea-alt-del.dk/t7/api/products?limit=30&${theme}=${subject}`)
 
 
 function showProducts(products) {
+    numItems.textContent = products.length;
     productListContainer.innerHTML = "";
     products.forEach((element) => {
-        console.log(myRange.value);
         productListContainer.innerHTML += `<article class="smallProduct ${element.soldout && "soldOut"
             } ${element.discount && "onSale"}">
             <img src="https://kea-alt-del.dk/t7/images/webp/640/${element.id
