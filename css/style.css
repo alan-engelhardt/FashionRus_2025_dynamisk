@@ -212,3 +212,18 @@ dt {
 .aktiv {
   background-color: red;
 }
+
+#filters,
+#filters div {
+  display: flex;
+  gap: .5rem;
+  align-items: center;
+
+  button {
+    margin: 0;
+  }
+}
+
+#filters {
+  margin-bottom: 1rem;
+}
