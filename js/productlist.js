@@ -36,6 +36,7 @@ document.querySelector("#filters").addEventListener("click", showFiltered);
 function showFiltered(event) {
     // tjek om der er en gender data-attribut
     if (event.target.dataset.gender) {
+        // sæt aktiv class på det der blev klikket på og fjern den fra den forrige
         document.querySelector("#filters .aktiv").classList.remove("aktiv");
         event.target.classList.add("aktiv");
         const gender = event.target.dataset.gender;
