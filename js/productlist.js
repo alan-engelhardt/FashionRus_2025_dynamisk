@@ -1,6 +1,27 @@
 const params = new URLSearchParams(window.location.search);
 const category = params.get("category");
-document.querySelector("h2").textContent = category;
+const brand = params.get("brand");
+const season = params.get("season");
+let subhead = document.querySelector("h2");
+let theme = "season";
+let subject = "Summer"
+
+if (category) {
+    subhead.textContent = category;
+    theme = "category";
+    subject = category;
+} else if (brand) {
+    subhead.textContent = brand;
+    theme = "brandname";
+    subject = brand;
+} else if (season) {
+    subhead.textContent = season;
+    theme = "season";
+    subject = season;
+} else {
+    subhead.textContent = "Summer";
+    theme = "season";
+}
 
 const productListContainer = document.querySelector("main");
 
@@ -18,7 +39,7 @@ function showFiltered(event) {
 
 let allData;
 
-fetch(`https://kea-alt-del.dk/t7/api/products?limit=30&category=${category}`)
+fetch(`https://kea-alt-del.dk/t7/api/products?limit=30&${theme}=${subject}`)
     .then((response) => response.json())
     .then((data) => {
         allData = data;
