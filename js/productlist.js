@@ -26,7 +26,7 @@ if (category) {
 
 const productListContainer = document.querySelector("main");
 
-// definer to globale virabler til forskellige dataset
+// definer to globale virabler til de forskellige dataset
 let allData, currentDataSet;
 
 // sæt eventlistener på elementet der indeholder filterknapperne
@@ -55,13 +55,13 @@ function sortItems(event) {
     const direction = event.target.dataset.direction;
     if (direction == "lohi") {
         // her soteres arrayet ifht. egenskaben price fra lav til høj
-        currentDataSet.sort((firstItem, secondItem) => firstItem.egenskaben - secondItem.price);
-        // her soteres arrayet ifht. egenskaben price fra høj til lav
+        currentDataSet.sort((firstItem, secondItem) => firstItem.price - secondItem.price);
     } else {
+        // her soteres arrayet ifht. egenskaben price fra høj til lav
         currentDataSet.sort((firstItem, secondItem) => secondItem.price - firstItem.price);
     }
-    // showProducts kaldes med det sorterede array som argument
     showProducts(currentDataSet);
+    // showProducts kaldes med det sorterede array som argument
 }
 
 
@@ -74,10 +74,9 @@ fetch(`https://kea-alt-del.dk/t7/api/products?limit=30&${theme}=${subject}`)
 
 
 function showProducts(products) {
-    console.log(products);
     productListContainer.innerHTML = "";
     products.forEach((element) => {
-        //console.log(element);
+        console.log(element.price);
         productListContainer.innerHTML += `<article class="smallProduct ${element.soldout && "soldOut"
             } ${element.discount && "onSale"}">
             <img src="https://kea-alt-del.dk/t7/images/webp/640/${element.id
