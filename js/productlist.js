@@ -2,7 +2,6 @@ const params = new URLSearchParams(window.location.search);
 const category = params.get("category");
 const brand = params.get("brand");
 const season = params.get("season");
-let allData, currentDataSet;
 let subhead = document.querySelector("h2");
 let theme = "season";
 let subject = "Summer"
@@ -22,34 +21,46 @@ if (category) {
 } else {
     subhead.textContent = "Summer";
     theme = "season";
+    subject = "Summer";
 }
 
 const productListContainer = document.querySelector("main");
 
+// definer to globale virabler til forskellige dataset
+let allData, currentDataSet;
+
+// sæt eventlistener på elementet der indeholder filterknapperne
 document.querySelector("#filters").addEventListener("click", showFiltered);
 
+// funktion der enten viser alle data eller det filtrerede udsnit
 function showFiltered(event) {
     const gender = event.target.dataset.gender;
     if (gender == "All") {
         showProducts(allData);
         currentDataSet = allData
     } else {
+        // her filtreres det valgte udsnit (den værdi der står i gender) fra alle data
         const udsnit = allData.filter(product => product.gender == gender);
-        currentDataSet = udsnit
+        currentDataSet = udsnit;
     }
+    // currentDataSet indehodler enten alle produkter eller et udsnit
     showProducts(currentDataSet);
 }
 
+// sæt eventlistener på elementet der indeholder sorteringsknapperne
 document.querySelector("#sorting").addEventListener("click", sortItems);
 
+// funktion der sorterer arrayet currentDataSet baseret på hvilken sorteringsknap der er trykket på
 function sortItems(event) {
-    console.log(currentDataSet);
     const direction = event.target.dataset.direction;
     if (direction == "lohi") {
-        currentDataSet.sort((firstItem, secondItem) => firstItem.price - secondItem.price);
+        // her soteres arrayet ifht. egenskaben price fra lav til høj
+        currentDataSet.sort((firstItem, secondItem) => firstItem.egenskaben - secondItem.price);
+        // her soteres arrayet ifht. egenskaben price fra høj til lav
     } else {
         currentDataSet.sort((firstItem, secondItem) => secondItem.price - firstItem.price);
     }
+    // showProducts kaldes med det sorterede array som argument
     showProducts(currentDataSet);
 }
 
