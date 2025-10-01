@@ -6,9 +6,8 @@ const productListContainer = document.querySelector("main");
 
 document.querySelector("#filters").addEventListener("click", showFiltered);
 
-function showFiltered(e) {
-    console.log(e.target.dataset.gender);
-    const gender = e.target.dataset.gender;
+function showFiltered(event) {
+    const gender = event.target.dataset.gender;
     if (gender == "All") {
         showProducts(allData);
     } else {
