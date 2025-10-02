@@ -5,16 +5,17 @@ document.querySelector("h2").textContent = category;
 const productListContainer = document.querySelector("main");
 
 document.querySelector("#filters").addEventListener("click", showFiltered);
+
 document.querySelector("#sorting").addEventListener("click", showSorted);
 
 function showSorted(event) {
     const direction = event.target.dataset.direction;
     if (direction == "lohi") {
-        allData.sort((a, b) => a.price - b.price);
+        currentDataSet.sort((a, b) => a.price - b.price);
     } else {
-        allData.sort((a, b) => b.price - a.price);
+        currentDataSet.sort((a, b) => b.price - a.price);
     }
-    showProducts(allData);
+    showProducts(currentDataSet);
 }
 
 function showFiltered(event) {
@@ -22,19 +23,20 @@ function showFiltered(event) {
     console.log(event.target.dataset.gender);
     const gender = event.target.dataset.gender;
     if (gender == "All") {
-        showProducts(allData);
+        currentDataSet = allData;
     } else {
         const udsnit = allData.filter(product => product.gender == gender);
-        showProducts(udsnit);
+        currentDataSet = udsnit;
     }
+    showProducts(currentDataSet);
 }
 
-let allData;
+let allData, currentDataSet;
 
 fetch(`https://kea-alt-del.dk/t7/api/products?limit=30&category=${category}`)
     .then((response) => response.json())
     .then((data) => {
-        allData = data;
+        allData = currentDataSet = data;
         showProducts(allData);
     });
 
