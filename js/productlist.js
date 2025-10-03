@@ -44,6 +44,7 @@ function highestPrice(arr) {
     arr.sort((firstItem, secondItem) => firstItem.price - secondItem.price);
     const highest = arr[arr.length - 1].price;
     myRange.max = highest;
+    myRange.value = highest;
     maxDisp.textContent = highest;
     myRange.min = arr[0].price;
     minDisp.textContent = arr[0].price;
@@ -66,15 +67,15 @@ function showFiltered(event) {
             const udsnit = allData.filter(product => product.gender == gender);
             currentDataSet = udsnit;
         }
-
+        // currentDataSet indehodler enten alle produkter eller et udsnit
+        showProducts(currentDataSet);
+        highestPrice(currentDataSet);
         // fitrer efter max pris hvis slider/range er ændret
     } else if (event.target.id == "myRange") {
         const max = event.target.value;
-        const udsnit = allData.filter(product => product.price <= max);
-        currentDataSet = udsnit;
+        const udsnit = currentDataSet.filter(product => product.price <= max);
+        showProducts(udsnit);
     }
-    // currentDataSet indehodler enten alle produkter eller et udsnit
-    showProducts(currentDataSet);
 }
 
 // sæt eventlistener på elementet der indeholder sorteringsknapperne
@@ -103,8 +104,8 @@ fetch(`https://kea-alt-del.dk/t7/api/products?limit=30&${theme}=${subject}`)
     .then((response) => response.json())
     .then((data) => {
         allData = currentDataSet = data;
-        highestPrice(data);
-        showProducts(allData);
+        highestPrice(currentDataSet);
+        showProducts(currentDataSet);
     });
 
 
