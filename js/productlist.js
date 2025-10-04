@@ -1,29 +1,29 @@
 const params = new URLSearchParams(window.location.search);
-const category = params.get("category");
+//const category = params.get("category");
+const category = "smartphones";
 document.querySelector("h2").textContent = category;
 
 const productListContainer = document.querySelector("main");
 
-fetch(`https://kea-alt-del.dk/t7/api/products?limit=20&category=${category}`)
+
+fetch(`https://dummyjson.com/products/category/${category}`)
     .then((response) => response.json())
     .then((data) => showProducts(data));
 
-function showProducts(products) {
-    console.log(products);
-    products.forEach((element) => {
-        console.log(element);
+function showProducts(data) {
+    console.log(data);
+    data.products.forEach((element) => {
+        //console.log(element);
         productListContainer.innerHTML += `<article class="smallProduct ${element.soldout && "soldOut"
-            } ${element.discount && "onSale"}">
-            <img src="https://kea-alt-del.dk/t7/images/webp/640/${element.id
-            }.webp" alt="product image" />
-            <h3>${element.productdisplayname}</h3>
-            <p class="subtle">Tshirts | Nike</p>
+            } ${element.discountPercentage && "onSale"}">
+            <img src="${element.thumbnail}" alt="product image" />
+            <h3>${element.brand}</h3>
             <p class="price">DKK <span>${element.price}</span>,-</p>
             <div class="discounted">
                 <p>Now DKK <span>${Math.round(
-                element.price - (element.price * element.discount) / 100
+                element.price - (element.price * element.discountPercentage) / 100
             )}</span>,-</p>
-                <p><span>${element.discount}</span>%</p>
+                <p><span>${element.discountPercentage}</span>%</p>
             </div>
             <a href="product.html?id=${element.id}">Read More</a>
         </article>`;
