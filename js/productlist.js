@@ -1,13 +1,33 @@
-const params = new URLSearchParams(window.location.search);
-const category = params.get("category");
-const brand = params.get("brand");
-const season = params.get("season");
-let subhead = document.querySelector("h2");
-let numItems = document.querySelector("#numItems");
-let theme = "season";
-let subject = "Summer"
+const params = new URLSearchParams(window.location.search); // læs og gem url patametre
+const category = params.get("category"); // læs værdien af category
+const brand = params.get("brand"); // læs værdien af brand
+const season = params.get("season"); // læs værdien af season
+let theme = "season"; // sæt deafault theme
+let subject = "Summer"; // sæt default subject
 
+const productListContainer = document.querySelector("main");
+const subhead = document.querySelector("h2");
+const numItems = document.querySelector("#numItems");
 
+// referencer til elementerne i vores max pris slider
+const myRange = document.querySelector("#myRange");
+const maxDisp = document.querySelector("#max");
+const minDisp = document.querySelector("#min");
+
+// sæt eventlistenere på max pris slider (input ændrer tallet i DOM realtime)
+myRange.addEventListener("input", (event) => maxDisp.textContent = event.target.value);
+myRange.addEventListener("change", showFiltered);
+
+// sæt eventlistener på sorteringsknapperne
+document.querySelector("#sorting").addEventListener("click", sortItems);
+
+// sæt eventlistener på elementet der indeholder filterknapperne
+document.querySelector("#filters").addEventListener("click", showFiltered);
+
+// definer to globale virabler til de to forskellige dataset
+let allData, currentDataSet;
+
+// tjek hvilken kategori-side der linkes fra
 if (category) {
     subhead.textContent = category;
     theme = "category";
@@ -26,29 +46,24 @@ if (category) {
     subject = "Summer";
 }
 
-const productListContainer = document.querySelector("main");
+// hent json fra API'et
+fetch(`https://kea-alt-del.dk/t7/api/products?limit=30&${theme}=${subject}`)
+    .then((response) => response.json())
+    .then((data) => {
+        allData = currentDataSet = data;
+        highestPrice(currentDataSet);
+        showProducts(currentDataSet);
+    });
 
-// definer to globale virabler til de forskellige dataset
-let allData, currentDataSet;
-
-// sæt eventlistener på elementet der indeholder filterknapperne
-document.querySelector("#filters").addEventListener("click", showFiltered);
-
-const myRange = document.querySelector("#myRange");
-const maxDisp = document.querySelector("#max");
-const minDisp = document.querySelector("#min");
-myRange.addEventListener("input", () => maxDisp.textContent = event.target.value);
-myRange.addEventListener("change", showFiltered);
-
-function highestPrice(arr) {
-    arr.sort((firstItem, secondItem) => firstItem.price - secondItem.price);
-    const highest = arr[arr.length - 1].price;
+// funktion der finder højeste og laveste pris i det aktuelle dataset og indstiller max pris slider derefter
+function highestPrice(data) {
+    data.sort((firstItem, secondItem) => firstItem.price - secondItem.price);
+    const highest = data[data.length - 1].price;
     myRange.max = highest;
     myRange.value = highest;
     maxDisp.textContent = highest;
-    myRange.min = arr[0].price;
-    minDisp.textContent = arr[0].price;
-    console.log(arr[0])
+    myRange.min = data[0].price;
+    minDisp.textContent = data[0].price;
 }
 
 // funktion der enten viser alle data eller et filtreret udsnit
@@ -78,9 +93,6 @@ function showFiltered(event) {
     }
 }
 
-// sæt eventlistener på elementet der indeholder sorteringsknapperne
-document.querySelector("#sorting").addEventListener("click", sortItems);
-
 // funktion der sorterer arrayet currentDataSet baseret på hvilken sorteringsknap der er trykket på
 function sortItems(event) {
     if (event.target.dataset.direction) {
@@ -99,16 +111,7 @@ function sortItems(event) {
     }
 }
 
-
-fetch(`https://kea-alt-del.dk/t7/api/products?limit=30&${theme}=${subject}`)
-    .then((response) => response.json())
-    .then((data) => {
-        allData = currentDataSet = data;
-        highestPrice(currentDataSet);
-        showProducts(currentDataSet);
-    });
-
-
+// funktion der viser det aktuelle dataset og antallet af produkter i dette i DOM
 function showProducts(products) {
     numItems.textContent = products.length;
     productListContainer.innerHTML = "";
