@@ -1,6 +1,6 @@
 const params = new URLSearchParams(window.location.search);
-//const category = params.get("category");
-const category = "smartphones";
+const category = params.get("category");
+//const category = "smartphones";
 document.querySelector("h2").textContent = category;
 
 const productListContainer = document.querySelector("main");
