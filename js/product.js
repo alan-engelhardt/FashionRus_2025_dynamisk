@@ -3,22 +3,23 @@ const productContainer = document.querySelector("#productContainer");
 const params = new URLSearchParams(window.location.search);
 const id = params.get("id");
 
-fetch(`https://kea-alt-del.dk/t7/api/products/${id}`)
+fetch(`https://dummyjson.com/products/${id}`)
   .then((response) => response.json())
   .then((data) => showProduct(data));
 
 function showProduct(product) {
+  console.log(product)
   productContainer.innerHTML = `
     <figure>
     <img
-    src="https://kea-alt-del.dk/t7/images/webp/640/${product.id}.webp"
+    src="${product.images[0]}"
     alt="Produktbillede"
     class="productImage"
     />
     <span class="saleLabel">Udsalg!</span>
     </figure>
     <section class="productDetails">
-    <h2 class="productName">${product.productdisplayname}</h2>
+    <h2 class="productName">${product.brand}</h2>
     <div>
     <p class="articleType"><span class="bold">Type:</span> ${product.articletype}</p>
     <p class="productCategory"><span class="bold">Kategori:</span> ${product.category}</p>
