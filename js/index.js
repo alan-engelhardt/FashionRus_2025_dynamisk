@@ -7,6 +7,6 @@ fetch("https://dummyjson.com/products/categories")
 function showCategories(categories) {
   console.log(categories);
   categories.forEach((category) => {
-    categorylist.innerHTML += `<a href="productlist.html?category=${category.slug}">${category.name}</a>`;
+    categorylist.innerHTML += `<a href="productlist.html?category=${category.name}&slug=${category.slug}">${category.name}</a>`;
   });
 }

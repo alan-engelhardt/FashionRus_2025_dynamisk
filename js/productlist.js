@@ -1,12 +1,13 @@
 const params = new URLSearchParams(window.location.search);
 const category = params.get("category");
+const slug = params.get("slug");
 //const category = "smartphones";
 document.querySelector("h2").textContent = category;
 
 const productListContainer = document.querySelector("main");
 
 
-fetch(`https://dummyjson.com/products/category/${category}?limit=0`)
+fetch(`https://dummyjson.com/products/category/${slug}?limit=0`)
     .then((response) => response.json())
     .then((data) => showProducts(data));
 
