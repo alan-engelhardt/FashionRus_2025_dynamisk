@@ -6,7 +6,7 @@ document.querySelector("h2").textContent = category;
 const productListContainer = document.querySelector("main");
 
 
-fetch(`https://dummyjson.com/products/category/${category}`)
+fetch(`https://dummyjson.com/products/category/${category}?limit=0`)
     .then((response) => response.json())
     .then((data) => showProducts(data));
 
